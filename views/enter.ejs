@@ -1,28 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/app.css">
-</head>
-<body>
+<%- include('./partials/header')  %> 
+
+<br>
     <section>
         <form action="/home" method="POST">
+            
             <fieldset>
-                <legend for="name">Enter Name</legend>
-                <input type="text" name="name" id="id" required>
-                <legend for="email">Enter Email</legend>
-                <input type="email" name="email" id="email" required>
-                <legend  for="phone">Enter Phone Numbber</legend>
-                <input type="text" name="phone" id="phone">
+              
+                <legend for="name">Enter Your Name:</legend>
+                <input type="text" name="name" id="id" required placeholder="Your Name">
+                <br>
+                <legend for="email">Enter Your Email:</legend>
+                <input type="email" name="email" id="email" required placeholder="Your Email">
+                <br>
+                <legend  for="phone">Enter Your Phone Number:</legend>
+                <input type="text" name="phone" id="phone" placeholder="Your Phone Number">
+                <br> <br>
                 <legend for="hrs">Enter time(IN 24 HRS FORMAT)</legend>
-                <input type="number" name="cinh" id="cinh" min="0" max="23" required>
-                <input type="number" name="cinm" id="cinm" min="0" max="59" required>
+                <input type="number" name="cinh" id="cinh" min="0" max="23" required placeholder="hr">
+                <input type="number" name="cinm" id="cinm" min="0" max="59" required placeholder="min">
+                <br> <br>
                 <button type="submit" id="submit">Submit</button>
             </fieldset>
         </form>
     </section>
-</body>
-</html>
+
+
+    <%- include('./partials/footer')  %>
