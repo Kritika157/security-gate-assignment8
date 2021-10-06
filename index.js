@@ -2,7 +2,6 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-
 const express=require('express');
 const app=express();
 const mongoose=require('mongoose');
@@ -26,25 +25,29 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname,'public')))
 
 
-app.get('/',async (req,res)=>{
+app.get('/', function(req, res){
+    res.redirect('/home');
+})
+
+app.get('/home',async (req,res)=>{
     const data=await Data.find({});
     res.render('home',{data});
 })
-app.get('/enter',(req,res)=>{
+app.get('/home/enter',(req,res)=>{
     res.render('enter');
 })
-app.post('/',async(req,res)=>{
+app.post('/home',async(req,res)=>{
     const {name,email,phone,cinh,cinm}=req.body;
     sendemail(email,cinh,cinm);
     await Data.create({name,email,phone,cinh,cinm});
-    res.redirect('/');
+    res.redirect('/home');
 })
-app.get('/:id',async(req,res)=>{
+app.get('/home/:id',async(req,res)=>{
     const {id}=req.params;
     const d=await Data.findById(id);
     res.render('exit',{d});
 })
-app.put('/:id',async(req,res)=>{
+app.put('/home/:id',async(req,res)=>{
     const {id}=req.params;
     const {couth,coutm}=req.body;
     const oh=couth;
@@ -52,18 +55,18 @@ app.put('/:id',async(req,res)=>{
     const d=await Data.findById(id)
     sendexmail(d.email,oh,om)
     await Data.findByIdAndUpdate(id,{$set:{status:"Checked Out",couth:oh,coutm,om}});
-    res.redirect('/');
+    res.redirect('/home');
 })
-app.delete('/:id',async (req,res)=>{
+app.delete('/home/:id',async (req,res)=>{
     const {id}=req.params;
     await Data.findByIdAndDelete(id);
-    res.redirect('/');
+    res.redirect('/home');
 })
 
 
 function sendemail(email,cinh,cinm){
     const sgMail=require('@sendgrid/mail');
-   const  sendgrid=process.env.API_KEY;
+   const  sendgrid= process.env.API_KEY;
   sgMail.setApiKey(sendgrid);
   let m=cinm.toString();
   let h=cinh.toString();;
@@ -75,7 +78,7 @@ function sendemail(email,cinh,cinm){
   }
   const msg={
       to: email,
-      from: "kritika1082.cse19@chitkara.edu.in",
+      from: 'kritika1082.cse19@chitkara.edu.in',
       subject:"Entering building",
       text:`Hi you entered the building at ${h}:${m}`
   };
@@ -97,16 +100,14 @@ function sendexmail(email,couth,coutm){
   }
   const msg={
       to: email,
-      from: "kritika1082.cse19@chitkara.edu.in",
+
+      from: 'kritika1082.cse19@chitkara.edu.in',
       subject:"Checking out",
       text:`Hi you checked out at ${h}:${m}`
   };
   sgMail.send(msg);
 }
 
-
-
-
-app.listen(process.env.PORT || 3000,(req,res)=>{
-    console.log("Listening at 3000");
+app.listen(process.env.PORT || 3000, (req,res)=>{
+    console.log("UP AT 3000");
 })
