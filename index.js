@@ -29,7 +29,7 @@ app.get('/', function(req, res){
     res.redirect('/home');
 })
 
-app.get('/home',async (req,res)=>{
+app.get('/home', async function(req,res){
     const data=await Data.find({});
     res.render('home',{data});
 })
