@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
     console.log("DB CONNECTED")
 })
-.catch((er)=>{
+.catch((err)=>{
     console.log(err)
 })
 app.set('view engine','ejs');
